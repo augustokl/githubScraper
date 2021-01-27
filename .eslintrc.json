@@ -16,7 +16,14 @@
   },
   "plugins": ["@typescript-eslint", "prettier"],
   "rules": {
+    "no-underscore-dangle": "off",
     "prettier/prettier": "error",
+    "class-methods-use-this": "off",
+    "@typescript-eslint/camelcase": "off",
+    "camelcase": "off",
+    "no-useless-constructor": "off",
+    "no-restricted-syntax": "off",
+    "no-await-in-loop": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
