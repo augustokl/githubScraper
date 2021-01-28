@@ -16,12 +16,26 @@ export default class CreateUsers1611716188975 implements MigrationInterface {
             type: 'varchar',
           },
           {
+            name: 'url',
+            type: 'varchar',
+          },
+          {
             name: 'avatar_url',
             type: 'varchar',
             isNullable: true,
           },
           {
             name: 'name',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
+            name: 'email',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
+            name: 'hireable',
             type: 'varchar',
             isNullable: true,
           },

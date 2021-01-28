@@ -15,10 +15,19 @@ class User {
   login: string;
 
   @Column()
+  url: string;
+
+  @Column()
   avatar_url: string;
 
   @Column()
   name: string;
+
+  @Column()
+  email: string;
+
+  @Column()
+  hireable: string;
 
   @Column()
   company: string;

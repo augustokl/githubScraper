@@ -1,9 +1,20 @@
 import axios from 'axios';
 
-export default axios.create({
+const parameters = {
   baseURL: 'https://api.github.com',
   headers: {
     Accept: 'application/vnd.github.v3+json',
-    Authorization: 'token 84e46dcf27739a2f3b14ab6b656d2699a7d4c719',
   },
-});
+};
+
+const token = process.env.API_GITHUB_KEY;
+
+if (token) {
+  parameters.headers = Object.assign(parameters.headers, {
+    Authorization: `token ${token}`,
+  });
+}
+
+const api = axios.create(parameters);
+
+export default api;

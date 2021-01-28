@@ -1,8 +1,11 @@
 export default interface ISaveUserDTO {
   id: number;
   login: string;
+  url: string;
   avatar_url: string;
   name: string;
+  email: string;
+  hireable: string;
   company: string;
   location: string;
   blog: string;

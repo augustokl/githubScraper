@@ -5,8 +5,11 @@ class UserUtils {
     const {
       id,
       login,
+      url,
       avatar_url,
       name,
+      email,
+      hireable,
       company,
       location,
       blog,
@@ -22,8 +25,11 @@ class UserUtils {
     return {
       id,
       login,
+      url,
       avatar_url,
       name,
+      email,
+      hireable,
       company,
       location,
       blog,

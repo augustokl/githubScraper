@@ -10,6 +10,8 @@ import {
 
 import User from '@modules/users/infra/typeorm/entities/User';
 
+import { Exclude, Type, Transform } from 'class-transformer';
+
 @Entity('repositories')
 class Appointment {
   @PrimaryColumn()
@@ -18,12 +20,24 @@ class Appointment {
   @Column()
   name: string;
 
+  @Column()
+  @Exclude()
+  user_id: number;
+
   @ManyToOne(() => User)
   @JoinColumn({ name: 'user_id' })
+  @Type(() => User)
+  @Transform(
+    ({ value }) => ({
+      id: value.id,
+      login: value.login,
+      name: value.name,
+      avatar_url: value.avatar_url,
+      url: value.url,
+    }),
+    { toClassOnly: true },
+  )
   owner: User;
-
-  @Column()
-  user_id: number;
 
   @Column()
   html_url: string;

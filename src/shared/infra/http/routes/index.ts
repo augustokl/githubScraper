@@ -1,14 +1,9 @@
-/* eslint-disable no-await-in-loop */
-import axios from 'axios';
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
+
+import repositoriesRouter from '@modules/repositories/http/routes/repositories.routes';
 
 const routes = Router();
 
-routes.get(
-  '/',
-  async (request: Request, response: Response): Promise<Response> => {
-    return response.json('Olá mundo');
-  },
-);
+routes.use('/repositories', repositoriesRouter);
 
 export default routes;

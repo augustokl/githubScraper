@@ -1,9 +1,11 @@
 import Repository from '@modules/repositories/infra/typeorm/entities/Repository';
-import { getRepository, Repository as OrmRepository, Raw } from 'typeorm';
+import { getRepository, Repository as OrmRepository, MoreThan } from 'typeorm';
 
 import IFindRepositoryFromUserDTO from '@modules/repositories/dtos/IFindRepositoryFromUserDTO';
 import ISaveRepositoryDTO from '@modules/repositories/dtos/ISaveRepositoryDTO';
 import IRepositoriesRepository from '@modules/repositories/repositories/IRepositoriesRepository';
+import IFindAllRepositoriesDTO from '@modules/repositories/dtos/IFindAllRepositoriesDTO';
+import IFindRepositoryDTO from '@modules/repositories/dtos/IFindRepositoryDTO';
 
 class RepositoriesRepository implements IRepositoriesRepository {
   private ormRepository: OrmRepository<Repository>;
@@ -25,7 +27,7 @@ class RepositoriesRepository implements IRepositoriesRepository {
       where: {
         user_id,
       },
-      relations: ['user'],
+      relations: ['owner'],
       order: {
         id: 'ASC',
       },
@@ -34,9 +36,30 @@ class RepositoriesRepository implements IRepositoriesRepository {
     return findRepositories;
   }
 
-  public async findAll(): Promise<Repository[]> {
-    const findRepositories = await this.ormRepository.find();
+  public async findAll({
+    from,
+    per_page,
+  }: IFindAllRepositoriesDTO): Promise<Repository[]> {
+    const findRepositories = await this.ormRepository.find({
+      where: {
+        id: MoreThan(from),
+      },
+      relations: ['owner'],
+      take: per_page,
+      order: {
+        id: 'ASC',
+      },
+    });
+
     return findRepositories;
+  }
+
+  public async findRepository(
+    id: IFindRepositoryDTO,
+  ): Promise<Repository | undefined> {
+    const findRepository = await this.ormRepository.findOne({ where: { id } });
+
+    return findRepository;
   }
 }
 
