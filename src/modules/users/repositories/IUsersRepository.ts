@@ -6,4 +6,5 @@ export default interface IUsersRepository {
   save(data: ISaveUserDTO): Promise<void>;
   findUserById(data: IFindUserDTO): Promise<User | undefined>;
   findAll(): Promise<User[]>;
+  getLastId(): Promise<number | undefined>;
 }

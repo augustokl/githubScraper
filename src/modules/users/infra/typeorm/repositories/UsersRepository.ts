@@ -18,7 +18,7 @@ class UsersRepository implements IUsersRepository {
   }
 
   public async findUserById({ id }: IFindUserDTO): Promise<User | undefined> {
-    const findUser = this.ormRepository.findOne({
+    const findUser = await this.ormRepository.findOne({
       where: {
         id,
       },
@@ -27,10 +27,23 @@ class UsersRepository implements IUsersRepository {
     return findUser;
   }
 
-  findAll(): Promise<User[]> {
-    const findUsers = this.ormRepository.find();
+  public async findAll(): Promise<User[]> {
+    const findUsers = await this.ormRepository.find();
 
     return findUsers;
+  }
+
+  public async getLastId(): Promise<number | undefined> {
+    const [user] = await this.ormRepository.find({
+      take: 1,
+      order: { id: 'DESC' },
+    });
+
+    if (!user) {
+      return 0;
+    }
+
+    return user.id;
   }
 }
 

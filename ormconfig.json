@@ -5,6 +5,7 @@
   "username": "postgres",
   "password": "postgres",
   "database": "api",
+  "logging": false,
   "entities": ["./src/modules/**/infra/typeorm/entities/*.ts"],
   "migrations": ["./src/shared/infra/typeorm/migrations/*.ts"],
   "cli": {

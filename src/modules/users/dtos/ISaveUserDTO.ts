@@ -3,7 +3,6 @@ export default interface ISaveUserDTO {
   login: string;
   avatar_url: string;
   name: string;
-  avatar: string;
   company: string;
   location: string;
   blog: string;

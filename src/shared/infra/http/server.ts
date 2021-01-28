@@ -3,6 +3,8 @@ import express, { Request, Response, NextFunction } from 'express';
 import routes from './routes';
 
 import '@shared/infra/typeorm';
+import 'dotenv/config';
+import 'reflect-metadata';
 
 const app = express();
 
