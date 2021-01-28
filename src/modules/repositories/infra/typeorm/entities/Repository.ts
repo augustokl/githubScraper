@@ -34,6 +34,7 @@ class Appointment {
       name: value.name,
       avatar_url: value.avatar_url,
       url: value.url,
+      api_url: `${process.env.APP_API_URL}/users/${value.id}`,
     }),
     { toClassOnly: true },
   )
