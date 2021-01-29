@@ -8,7 +8,9 @@ import Queue from '@config/lib/queue';
 import Scraper from '../jobs/Scraper';
 
 (async () => {
-  await Queue.add({}, { repeat: { cron: '*/5 * * * *' } });
+  const schedule = process.env.CRON_SCHEDULE || '*/5 * * * *';
+
+  await Queue.add({}, { repeat: { cron: schedule } });
 })();
 
 Queue.process(Scraper.handle);

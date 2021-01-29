@@ -18,23 +18,6 @@ class RepositoryUtils {
       pushed_at,
     } = data;
 
-    console.log(
-      'DATA',
-      id,
-      name,
-      owner,
-      html_url,
-      description,
-      language,
-      forks,
-      open_issues,
-      stargazers,
-      watchers,
-      created_at,
-      updated_at,
-      pushed_at,
-    );
-
     const user_id = owner.id;
 
     return {

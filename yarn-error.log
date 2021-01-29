@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/Cellar/node/15.0.1/bin/node /usr/local/Cellar/yarn/1.22.10/libexec/bin/yarn.js add tsyring
+  /usr/local/Cellar/node/15.0.1/bin/node /usr/local/Cellar/yarn/1.22.10/libexec/bin/yarn.js add tsnode
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/tsyring: Not found
+  Error: https://registry.yarnpkg.com/tsnode: Not found
       at Request.params.callback [as _callback] (/usr/local/Cellar/yarn/1.22.10/libexec/lib/cli.js:66988:18)
       at Request.self.callback (/usr/local/Cellar/yarn/1.22.10/libexec/lib/cli.js:140749:22)
       at Request.emit (node:events:327:20)
@@ -35,14 +35,21 @@ npm manifest:
     "scripts": {
       "build": "tsc",
       "dev:server": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
+      "dev:queue": "tsc tsconfig-paths/register --transpile-only --ignore-watch node_modules  src/shared/infra/services/queue.ts",
+      "dev:queue:cron": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/shared/infra/services/queue.ts cron",
       "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
     },
     "dependencies": {
       "axios": "^0.21.1",
       "bull": "^3.20.0",
+      "class-transformer": "^0.3.2",
+      "dotenv": "^8.2.0",
       "express": "^4.17.1",
       "pg": "^8.5.1",
-      "typeorm": "^0.2.30"
+      "reflect-metadata": "^0.1.13",
+      "tsyringe": "^4.4.0",
+      "typeorm": "^0.2.30",
+      "yargs": "^16.2.0"
     },
     "devDependencies": {
       "@types/bull": "^3.15.0",
@@ -602,6 +609,11 @@ Lockfile:
       readdirp "~3.5.0"
     optionalDependencies:
       fsevents "~2.3.1"
+  
+  class-transformer@^0.3.2:
+    version "0.3.2"
+    resolved "https://registry.yarnpkg.com/class-transformer/-/class-transformer-0.3.2.tgz#779ef5f124784324b40f8e927c774bd96cdecd4b"
+    integrity sha512-9QY6QXBH/+Gt1C3HBmJCrgY6+EFpIa6aLjfDnlXFx0zQl/HjrCE7qoaI0srNrxpMIfsobCpgUdDG5JYtJOpVsw==
   
   cli-highlight@^2.1.10:
     version "2.1.10"
@@ -2704,7 +2716,7 @@ Lockfile:
       strip-bom "^3.0.0"
       strip-json-comments "^2.0.0"
   
-  tslib@^1.13.0, tslib@^1.8.1:
+  tslib@^1.13.0, tslib@^1.8.1, tslib@^1.9.3:
     version "1.14.1"
     resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
     integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
@@ -2715,6 +2727,13 @@ Lockfile:
     integrity sha512-RYbuQuvkhuqVeXweWT3tJLKOEJ/UUw9GjNEZGWdrLLlM+611o1gwLHBpxoFJKKl25fLprp2eVthtKs5JOrNeXg==
     dependencies:
       tslib "^1.8.1"
+  
+  tsyringe@^4.4.0:
+    version "4.4.0"
+    resolved "https://registry.yarnpkg.com/tsyringe/-/tsyringe-4.4.0.tgz#cd8a6866316b4cf643ee5e72c41c8a221ccea73d"
+    integrity sha512-SlMApe1lhIq546CDp7bF+IdF4RB6d+9C5T7B0AS0P/Bm+Qpizj/gEmZzvw9J/KlXPEt4qHTbi1TRvX3rCPSdTg==
+    dependencies:
+      tslib "^1.9.3"
   
   type-check@^0.4.0, type-check@~0.4.0:
     version "0.4.0"
@@ -2887,7 +2906,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-20.2.4.tgz#b42890f14566796f85ae8e3a25290d205f154a54"
     integrity sha512-WOkpgNhPTlE73h4VFAFsOnomJVaovO8VqLDzy5saChRBFQFBoMYirowyW+Q9HB4HFF4Z7VZTiG3iSzJJA29yRA==
   
-  yargs@^16.0.0, yargs@^16.0.3:
+  yargs@^16.0.0, yargs@^16.0.3, yargs@^16.2.0:
     version "16.2.0"
     resolved "https://registry.yarnpkg.com/yargs/-/yargs-16.2.0.tgz#1c82bf0f6b6a66eafce7ef30e376f49a12477f66"
     integrity sha512-D1mvvtDG0L5ft/jGWkLpG1+m0eQxOfaBvTNELraWj22wSVUMWxZUvYgJYcKh6jGGIkJFhH4IZPQhR4TKpc8mBw==

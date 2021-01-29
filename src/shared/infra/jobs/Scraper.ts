@@ -1,18 +1,19 @@
 import api from '@config/lib/api';
 
-import RepositoriesController from '@modules/repositories/http/controllers/RepositoriesController';
+import RepositoriesController from '@modules/repositories/infra/http/controllers/RepositoriesController';
 import RepositoryUtils from '@modules/repositories/utils/RepositoryUtils';
-import UsersController from '@modules/users/http/controllers/UsersController';
+import UsersController from '@modules/users/infra/http/controllers/UsersController';
 import UserUtils from '@modules/users/utils/UserUtils';
+import { DoneCallback, Job } from 'bull';
 
 interface IScraper {
   key: string;
-  handle(): Promise<void>;
+  handle(job: Job, done: DoneCallback): Promise<void>;
 }
 
 export default {
   key: 'Scraper',
-  async handle(): Promise<void> {
+  async handle(job: Job, done: DoneCallback): Promise<void> {
     const userUtils = new UserUtils();
     const repositoryUtils = new RepositoryUtils();
 
@@ -21,15 +22,22 @@ export default {
 
     const id = await userController.lastId();
 
-    let apiRequest = '/users?limit=20';
+    let apiRequest = '/users?per_page=20';
 
     if (id) {
       apiRequest += `&since=${id}`;
     }
 
     const { data } = await api.get(apiRequest);
+    const listUserLength = data.length;
+
+    let progress = 0;
+    let rowCount = 0;
 
     for (const row of data) {
+      progress = (100 * rowCount) / listUserLength;
+      job.progress(progress);
+
       const { data: userRaw } = await api.get(`/users/${row.login}`);
       const { data: userReposRaw } = await api.get(`/users/${row.login}/repos`);
 
@@ -40,6 +48,9 @@ export default {
         const repository = repositoryUtils.extractData(repositoryRaw);
         await repositoriesController.create(repository);
       }
+      rowCount += 1;
     }
+    job.progress(100);
+    done();
   },
 } as IScraper;
