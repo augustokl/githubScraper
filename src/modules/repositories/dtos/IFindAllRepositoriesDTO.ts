@@ -1,4 +1,4 @@
 export default interface IFindAllRepositoriesDTO {
-  from: number;
-  per_page: number;
+  starting_after: number;
+  limit: number;
 }

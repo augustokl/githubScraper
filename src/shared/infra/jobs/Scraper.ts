@@ -21,7 +21,7 @@ export default {
 
     const id = await userController.lastId();
 
-    let apiRequest = '/users?per_page=20';
+    let apiRequest = '/users?limit=20';
 
     if (id) {
       apiRequest += `&since=${id}`;

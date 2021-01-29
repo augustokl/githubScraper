@@ -36,15 +36,15 @@ class RepositoriesRepository implements IRepositoriesRepository {
   }
 
   public async findAll({
-    from,
-    per_page,
+    starting_after,
+    limit,
   }: IFindAllRepositoriesDTO): Promise<Repository[]> {
     const findRepositories = await this.ormRepository.find({
       where: {
-        id: MoreThan(from),
+        id: MoreThan(starting_after),
       },
       relations: ['owner'],
-      take: per_page,
+      take: limit,
       order: {
         id: 'ASC',
       },

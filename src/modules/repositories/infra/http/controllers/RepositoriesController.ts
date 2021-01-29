@@ -10,15 +10,15 @@ import FindRepositoryService from '@modules/repositories/services/FindRepository
 
 class RepositoriesController {
   public async index(request: Request, response: Response): Promise<Response> {
-    const { per_page, from } = request.query;
+    const { limit, starting_after } = request.query;
 
     const findAllRepositoriesService = container.resolve(
       FindAllRepositoriesService,
     );
 
     const repositories = await findAllRepositoriesService.execute({
-      per_page: Number(per_page),
-      from: Number(from || 0),
+      limit: Number(limit || 10),
+      starting_after: Number(starting_after || 0),
     });
 
     return response.json(classToClass(repositories));

@@ -1,7 +1,7 @@
-import { getRepository, Repository } from 'typeorm';
+import { getRepository, LessThan, MoreThan, Repository } from 'typeorm';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
-import IFindUserDTO from '@modules/users/dtos/IFindUserDTO';
 import ISaveUserDTO from '@modules/users/dtos/ISaveUserDTO';
+import IFindAllUsersDTO from '@modules/users/dtos/IFIndAllUsersDTO';
 import User from '../entities/User';
 
 class UsersRepository implements IUsersRepository {
@@ -17,7 +17,7 @@ class UsersRepository implements IUsersRepository {
     await this.ormRepository.save(user);
   }
 
-  public async findUserById({ id }: IFindUserDTO): Promise<User | undefined> {
+  public async findUserById(id: number): Promise<User | undefined> {
     const findUser = await this.ormRepository.findOne({
       where: {
         id,
@@ -27,15 +27,25 @@ class UsersRepository implements IUsersRepository {
     return findUser;
   }
 
-  public async findAll(): Promise<User[]> {
-    const findUsers = await this.ormRepository.find();
+  public async findAll({
+    starting_after,
+    limit,
+  }: IFindAllUsersDTO): Promise<User[]> {
+    const findUsers = await this.ormRepository.find({
+      where: {
+        id: MoreThan(starting_after),
+      },
+      take: limit,
+      order: {
+        id: 'ASC',
+      },
+    });
 
     return findUsers;
   }
 
   public async getLastId(): Promise<number | undefined> {
-    const [user] = await this.ormRepository.find({
-      take: 1,
+    const user = await this.ormRepository.findOne({
       order: { id: 'DESC' },
     });
 
