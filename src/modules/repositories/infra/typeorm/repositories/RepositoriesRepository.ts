@@ -5,7 +5,6 @@ import IFindRepositoryFromUserDTO from '@modules/repositories/dtos/IFindReposito
 import ISaveRepositoryDTO from '@modules/repositories/dtos/ISaveRepositoryDTO';
 import IRepositoriesRepository from '@modules/repositories/repositories/IRepositoriesRepository';
 import IFindAllRepositoriesDTO from '@modules/repositories/dtos/IFindAllRepositoriesDTO';
-import IFindRepositoryDTO from '@modules/repositories/dtos/IFindRepositoryDTO';
 
 class RepositoriesRepository implements IRepositoriesRepository {
   private ormRepository: OrmRepository<Repository>;
@@ -54,10 +53,11 @@ class RepositoriesRepository implements IRepositoriesRepository {
     return findRepositories;
   }
 
-  public async findRepository(
-    id: IFindRepositoryDTO,
-  ): Promise<Repository | undefined> {
-    const findRepository = await this.ormRepository.findOne({ where: { id } });
+  public async findRepository(id: number): Promise<Repository | undefined> {
+    const findRepository = await this.ormRepository.findOne({
+      where: { id },
+      relations: ['owner'],
+    });
 
     return findRepository;
   }

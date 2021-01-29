@@ -6,6 +6,7 @@ import ISaveRepositoryDTO from '@modules/repositories/dtos/ISaveRepositoryDTO';
 
 import SaveRepositoryService from '@modules/repositories/services/SaveRepositoryService';
 import FindAllRepositoriesService from '@modules/repositories/services/FindAllRepositoriesService';
+import FindRepositoryService from '@modules/repositories/services/FindRepositoryService';
 
 class RepositoriesController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -21,6 +22,16 @@ class RepositoriesController {
     });
 
     return response.json(classToClass(repositories));
+  }
+
+  public async find(request: Request, response: Response): Promise<Response> {
+    const { id } = request.params;
+
+    const findRepositoryService = container.resolve(FindRepositoryService);
+
+    const repository = await findRepositoryService.execute(Number(id));
+
+    return response.json(classToClass(repository));
   }
 
   public async create(data: ISaveRepositoryDTO): Promise<void> {
