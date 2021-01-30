@@ -1,0 +1,169 @@
+import FakeRepositoriesRepository from '../../repositories/fakes/FakeRepositoriesRepository';
+import CreateRepositoryService from '../CreateRepositoryService';
+import FindAllRepositoriesService from '../FindAllRepositoriesService';
+
+let createRepositoryService: CreateRepositoryService;
+let findAllRepositoriesService: FindAllRepositoriesService;
+let fakeRepositoriesRepository: FakeRepositoriesRepository;
+
+describe('FindAllRepositories', () => {
+  beforeEach(() => {
+    fakeRepositoriesRepository = new FakeRepositoriesRepository();
+
+    createRepositoryService = new CreateRepositoryService(
+      fakeRepositoriesRepository,
+    );
+    findAllRepositoriesService = new FindAllRepositoriesService(
+      fakeRepositoriesRepository,
+    );
+  });
+  it('should be able to find repositories default parameters', async () => {
+    for (let i = 0; i < 15; i++) {
+      await createRepositoryService.execute({
+        id: i,
+        name: 'test',
+        user_id: i,
+        html_url: 'github.com/JohnDoe/test',
+        description: 'Test repository',
+        language: 'Typescript',
+        forks: i,
+        open_issues: i,
+        stargazers: i,
+        watchers: i,
+        created_at: new Date(),
+        updated_at: new Date(),
+        pushed_at: new Date(),
+      });
+    }
+
+    const repositories = await findAllRepositoriesService.execute({
+      limit: 0,
+      starting_after: 0,
+    });
+
+    expect(repositories).toHaveLength(10);
+    expect(repositories).toEqual(
+      expect.arrayContaining([expect.objectContaining({ id: 1 })]),
+    );
+  });
+
+  it('should not be able to find more than 100 repositories', async () => {
+    for (let i = 0; i < 150; i++) {
+      await createRepositoryService.execute({
+        id: i,
+        name: 'test',
+        user_id: i,
+        html_url: 'github.com/JohnDoe/test',
+        description: 'Test repository',
+        language: 'Typescript',
+        forks: i,
+        open_issues: i,
+        stargazers: i,
+        watchers: i,
+        created_at: new Date(),
+        updated_at: new Date(),
+        pushed_at: new Date(),
+      });
+    }
+
+    const repositories = await findAllRepositoriesService.execute({
+      limit: 150,
+      starting_after: 0,
+    });
+
+    expect(repositories).toHaveLength(100);
+    expect(repositories).toEqual(
+      expect.arrayContaining([expect.objectContaining({ id: 1 })]),
+    );
+  });
+
+  it('should not be able to find less than 1 repository', async () => {
+    for (let i = 0; i < 11; i++) {
+      await createRepositoryService.execute({
+        id: i,
+        name: 'test',
+        user_id: i,
+        html_url: 'github.com/JohnDoe/test',
+        description: 'Test repository',
+        language: 'Typescript',
+        forks: i,
+        open_issues: i,
+        stargazers: i,
+        watchers: i,
+        created_at: new Date(),
+        updated_at: new Date(),
+        pushed_at: new Date(),
+      });
+    }
+
+    const repositories = await findAllRepositoriesService.execute({
+      limit: -10,
+      starting_after: 0,
+    });
+
+    expect(repositories).toHaveLength(10);
+    expect(repositories).toEqual(
+      expect.arrayContaining([expect.objectContaining({ id: 1 })]),
+    );
+  });
+
+  it('should be able to find only after starting_after', async () => {
+    for (let i = 0; i < 7; i++) {
+      await createRepositoryService.execute({
+        id: i,
+        name: 'test',
+        user_id: i,
+        html_url: 'github.com/JohnDoe/test',
+        description: 'Test repository',
+        language: 'Typescript',
+        forks: i,
+        open_issues: i,
+        stargazers: i,
+        watchers: i,
+        created_at: new Date(),
+        updated_at: new Date(),
+        pushed_at: new Date(),
+      });
+    }
+
+    const repositories = await findAllRepositoriesService.execute({
+      limit: 5,
+      starting_after: 1,
+    });
+
+    expect(repositories).toHaveLength(5);
+    expect(repositories).toEqual(
+      expect.arrayContaining([expect.not.objectContaining({ id: 1 })]),
+    );
+  });
+
+  it('should not be able to accept starting_after negative', async () => {
+    for (let i = 0; i < 6; i++) {
+      await createRepositoryService.execute({
+        id: i,
+        name: 'test',
+        user_id: i,
+        html_url: 'github.com/JohnDoe/test',
+        description: 'Test repository',
+        language: 'Typescript',
+        forks: i,
+        open_issues: i,
+        stargazers: i,
+        watchers: i,
+        created_at: new Date(),
+        updated_at: new Date(),
+        pushed_at: new Date(),
+      });
+    }
+
+    const repositories = await findAllRepositoriesService.execute({
+      limit: 5,
+      starting_after: -1,
+    });
+
+    expect(repositories).toHaveLength(5);
+    expect(repositories).toEqual(
+      expect.arrayContaining([expect.objectContaining({ id: 1 })]),
+    );
+  });
+});

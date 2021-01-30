@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 import Queue from 'bull';
-import redisConfig from '@shared/infra/redis';
 import { format } from 'date-fns';
 
 import Scraper from '@shared/infra/jobs/Scraper';
+import redisConfig from './redis';
 
 const scraperQueue = new Queue(Scraper.key, redisConfig);
 

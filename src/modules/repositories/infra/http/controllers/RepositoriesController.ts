@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 
-import ISaveRepositoryDTO from '@modules/repositories/dtos/ISaveRepositoryDTO';
+import ICreateRepositoryDTO from '@modules/repositories/dtos/ICreateRepositoryDTO';
 
-import SaveRepositoryService from '@modules/repositories/services/SaveRepositoryService';
+import CreateRepositoryService from '@modules/repositories/services/CreateRepositoryService';
 import FindAllRepositoriesService from '@modules/repositories/services/FindAllRepositoriesService';
 import FindRepositoryService from '@modules/repositories/services/FindRepositoryService';
 
@@ -17,8 +17,8 @@ class RepositoriesController {
     );
 
     const repositories = await findAllRepositoriesService.execute({
-      limit: Number(limit || 10),
-      starting_after: Number(starting_after || 0),
+      limit: Number(limit),
+      starting_after: Number(starting_after),
     });
 
     return response.json(classToClass(repositories));
@@ -34,10 +34,10 @@ class RepositoriesController {
     return response.json(classToClass(repository));
   }
 
-  public async create(data: ISaveRepositoryDTO): Promise<void> {
-    const saveRepositoryService = container.resolve(SaveRepositoryService);
+  public async create(data: ICreateRepositoryDTO): Promise<void> {
+    const createRepositoryService = container.resolve(CreateRepositoryService);
 
-    await saveRepositoryService.execute(data);
+    await createRepositoryService.execute(data);
   }
 }
 

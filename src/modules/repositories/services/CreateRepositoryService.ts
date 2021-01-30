@@ -1,6 +1,8 @@
 import { injectable, inject } from 'tsyringe';
 
-import ISaveRepository from '../dtos/ISaveRepositoryDTO';
+import Repository from '../infra/typeorm/entities/Repository';
+
+import ICreateRepositoryDTO from '../dtos/ICreateRepositoryDTO';
 import IRepositoriesRepository from '../repositories/IRepositoriesRepository';
 
 @injectable()
@@ -10,8 +12,10 @@ class SaveRepositoryService {
     private repositoriesRepository: IRepositoriesRepository,
   ) {}
 
-  public async execute(data: ISaveRepository): Promise<void> {
-    await this.repositoriesRepository.save(data);
+  public async execute(data: ICreateRepositoryDTO): Promise<Repository> {
+    const repository = await this.repositoriesRepository.create(data);
+
+    return repository;
   }
 }
 

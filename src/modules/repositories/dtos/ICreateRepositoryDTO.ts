@@ -1,4 +1,4 @@
-export default interface ISaveRepositoryDTO {
+export default interface ICreateRepositoryDTO {
   id: number;
   name: string;
   user_id: number;

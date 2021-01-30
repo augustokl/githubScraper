@@ -2,7 +2,7 @@ import Repository from '@modules/repositories/infra/typeorm/entities/Repository'
 import { getRepository, Repository as OrmRepository, MoreThan } from 'typeorm';
 
 import IFindRepositoryFromUserDTO from '@modules/repositories/dtos/IFindRepositoryFromUserDTO';
-import ISaveRepositoryDTO from '@modules/repositories/dtos/ISaveRepositoryDTO';
+import ICreateRepositoryDTO from '@modules/repositories/dtos/ICreateRepositoryDTO';
 import IRepositoriesRepository from '@modules/repositories/repositories/IRepositoriesRepository';
 import IFindAllRepositoriesDTO from '@modules/repositories/dtos/IFindAllRepositoriesDTO';
 
@@ -13,10 +13,12 @@ class RepositoriesRepository implements IRepositoriesRepository {
     this.ormRepository = getRepository(Repository);
   }
 
-  public async save(data: ISaveRepositoryDTO): Promise<void> {
+  public async create(data: ICreateRepositoryDTO): Promise<Repository> {
     const repository = this.ormRepository.create(data);
 
-    await this.ormRepository.save(repository);
+    const newRepository = await this.ormRepository.save(repository);
+
+    return newRepository;
   }
 
   public async findByUser({

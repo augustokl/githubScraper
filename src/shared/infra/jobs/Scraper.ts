@@ -48,7 +48,7 @@ export default {
         const repository = repositoryUtils.extractData(repositoryRaw);
         await repositoriesController.create(repository);
       }
-      rowCount += 1;
+      rowCount++;
     }
     job.progress(100);
     done();

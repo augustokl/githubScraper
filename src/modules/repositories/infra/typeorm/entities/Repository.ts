@@ -13,7 +13,7 @@ import User from '@modules/users/infra/typeorm/entities/User';
 import { Exclude, Type, Transform } from 'class-transformer';
 
 @Entity('repositories')
-class Appointment {
+class Repository {
   @PrimaryColumn()
   id: number;
 
@@ -71,4 +71,4 @@ class Appointment {
   pushed_at: Date;
 }
 
-export default Appointment;
+export default Repository;
