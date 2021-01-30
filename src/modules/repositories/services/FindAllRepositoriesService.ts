@@ -1,9 +1,10 @@
 import { injectable, inject } from 'tsyringe';
-import { validationPagination } from '@shared/utils/sharedValidation';
+import validationPagination from '@shared/utils/sharedValidation';
 
 import IFindAllRepositoriesDTO from '../dtos/IFindAllRepositoriesDTO';
-import Repository from '../infra/typeorm/entities/Repository';
 import IRepositoriesRepository from '../repositories/IRepositoriesRepository';
+
+import Repository from '../infra/typeorm/entities/Repository';
 
 @injectable()
 class FindAllRepositoriesService {

@@ -1,4 +1,3 @@
-import AppError from '@shared/errors/AppError';
 import FakeRepositoriesRepository from '../../repositories/fakes/FakeRepositoriesRepository';
 import CreateRepositoryService from '../CreateRepositoryService';
 import FindRepositoryService from '../FindRepositoryService';
@@ -46,16 +45,5 @@ describe('FindRepository', () => {
     const repository = await findRepositoryService.execute(10);
 
     expect(repository).toMatchObject({});
-  });
-  it('should not be able to find a repository with a malformed id', async () => {
-    await expect(findRepositoryService.execute(1.1)).rejects.toBeInstanceOf(
-      AppError,
-    );
-  });
-
-  it('should not be able to find a repository with a id greater than 2147483647.', async () => {
-    await expect(
-      findRepositoryService.execute(2147483648),
-    ).rejects.toBeInstanceOf(AppError);
   });
 });

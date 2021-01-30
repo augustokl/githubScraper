@@ -1,6 +1,6 @@
 import { injectable, inject } from 'tsyringe';
 
-import { validationPagination } from '@shared/utils/sharedValidation';
+import validationPagination from '@shared/utils/sharedValidation';
 import IFindAllUsersDTO from '../dtos/IFIndAllUsersDTO';
 import User from '../infra/typeorm/entities/User';
 

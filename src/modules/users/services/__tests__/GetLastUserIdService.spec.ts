@@ -1,19 +1,20 @@
 import FakeUsersRepository from '../../repositories/fakes/FakeUsersRepository';
 import CreateUserService from '../CreateUserService';
-import FindUserByIdService from '../FindUserByIdService';
+import GetLastUserIdService from '../GetLastUserIdService';
 
-let createUserService: CreateUserService;
-let findUserByIdService: FindUserByIdService;
 let fakeUsersRepository: FakeUsersRepository;
+let createUserService: CreateUserService;
+let getLastUserIdService: GetLastUserIdService;
 
-describe('FindUser', () => {
-  beforeEach(async () => {
+describe('GetLastUser', () => {
+  beforeEach(() => {
     fakeUsersRepository = new FakeUsersRepository();
 
     createUserService = new CreateUserService(fakeUsersRepository);
-    findUserByIdService = new FindUserByIdService(fakeUsersRepository);
-
-    for (let i = 0; i < 3; i++) {
+    getLastUserIdService = new GetLastUserIdService(fakeUsersRepository);
+  });
+  it('should be able to find last user id', async () => {
+    for (let i = 1; i <= 15; i++) {
       await createUserService.execute({
         id: i,
         login: 'johndoe',
@@ -34,17 +35,15 @@ describe('FindUser', () => {
         updated_at: new Date(),
       });
     }
-  });
-  it('should be able to find one user', async () => {
-    const user = await findUserByIdService.execute(1);
 
-    expect(user).toHaveProperty('id');
-    await expect(user?.id).toBe(1);
+    const id = await getLastUserIdService.execute();
+
+    expect(id).toBe(15);
   });
 
-  it('should not be able to find user with wrong id', async () => {
-    const user = await findUserByIdService.execute(10);
+  it('should not be able to find if not have any user', async () => {
+    const id = await getLastUserIdService.execute();
 
-    expect(user).toMatchObject({});
+    expect(id).toBe(undefined);
   });
 });

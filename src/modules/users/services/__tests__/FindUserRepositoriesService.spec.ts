@@ -1,5 +1,3 @@
-import AppError from '@shared/errors/AppError';
-
 import FakeRepositoriesRepository from '@modules/repositories/repositories/fakes/FakeRepositoriesRepository';
 import CreateRepositoryService from '@modules/repositories/services/CreateRepositoryService';
 
@@ -102,26 +100,6 @@ describe('FindUserRepositories', () => {
         starting_after: 0,
       }),
     ).toMatchObject({});
-  });
-
-  it('should not be able to find a user with a malformed id', async () => {
-    await expect(
-      findUserRepositoriesService.execute({
-        id: 1.1,
-        limit: 10,
-        starting_after: 0,
-      }),
-    ).rejects.toBeInstanceOf(AppError);
-  });
-
-  it('should not be able to find a user with a id greater than 2147483647.', async () => {
-    await expect(
-      findUserRepositoriesService.execute({
-        id: 2147483648,
-        limit: 10,
-        starting_after: 0,
-      }),
-    ).rejects.toBeInstanceOf(AppError);
   });
 
   it('should not be able to find more than 100 repositories', async () => {
