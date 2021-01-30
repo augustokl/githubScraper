@@ -2,23 +2,23 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 
-import ISaveUserDTO from '@modules/users/dtos/ISaveUserDTO';
+import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 
-import SaveUserService from '@modules/users/services/SaveUserService';
+import CreateUserService from '@modules/users/services/CreateUserService';
 import GetLastUserIdService from '@modules/users/services/GetLastUserIdService';
-import FindAllService from '@modules/users/services/FindAllService';
+import FindAllUsersService from '@modules/users/services/FindAllUsersService';
 import FindUserByIdService from '@modules/users/services/FindUserByIdService';
-import FindRepositoriesByUserService from '@modules/users/services/FindRepositoriesByUserService';
+import FindUserRepositoriesService from '@modules/users/services/FindUserRepositoriesService';
 
 class UsersController {
   public async index(request: Request, response: Response): Promise<Response> {
     const { limit, starting_after } = request.query;
 
-    const findAllService = container.resolve(FindAllService);
+    const findAllUsersService = container.resolve(FindAllUsersService);
 
-    const users = await findAllService.execute({
-      limit: Number(limit || 10),
-      starting_after: Number(starting_after || 0),
+    const users = await findAllUsersService.execute({
+      limit: Number(limit),
+      starting_after: Number(starting_after),
     });
 
     return response.json(users);
@@ -39,22 +39,25 @@ class UsersController {
     response: Response,
   ): Promise<Response> {
     const { id } = request.params;
+    const { limit, starting_after } = request.query;
 
-    const findRepositoriesByUserService = container.resolve(
-      FindRepositoriesByUserService,
+    const findUserRepositoriesService = container.resolve(
+      FindUserRepositoriesService,
     );
 
-    const repositories = await findRepositoriesByUserService.execute(
-      Number(id),
-    );
+    const repositories = await findUserRepositoriesService.execute({
+      id: Number(id),
+      limit: Number(limit),
+      starting_after: Number(starting_after),
+    });
 
     return response.json(classToClass(repositories));
   }
 
-  public async create(data: ISaveUserDTO): Promise<void> {
-    const saveUserService = container.resolve(SaveUserService);
+  public async create(data: ICreateUserDTO): Promise<void> {
+    const createUserService = container.resolve(CreateUserService);
 
-    await saveUserService.execute(data);
+    await createUserService.execute(data);
   }
 
   public async lastId(): Promise<number | undefined> {

@@ -1,4 +1,4 @@
-export default interface ISaveUserDTO {
+export default interface ICreateUserDTO {
   id: number;
   login: string;
   url: string;

@@ -1,7 +1,10 @@
 import { injectable, inject } from 'tsyringe';
 
+import { checkId, validationPagination } from '@shared/utils/sharedValidation';
+
 import IRepositoriesRepository from '@modules/repositories/repositories/IRepositoriesRepository';
 import Repository from '@modules/repositories/infra/typeorm/entities/Repository';
+import IFIndUserRepositoriesDTO from '../dtos/IFIndUserRepositoriesDTO copy';
 
 @injectable()
 class FindRepositoriesByUserService {
@@ -10,9 +13,22 @@ class FindRepositoriesByUserService {
     private repositoriesRepository: IRepositoriesRepository,
   ) {}
 
-  public async execute(user_id: number): Promise<Repository[]> {
+  public async execute({
+    id,
+    limit,
+    starting_after,
+  }: IFIndUserRepositoriesDTO): Promise<Repository[]> {
+    checkId(id);
+
+    const { checkLimit, checkStartingAfter } = validationPagination(
+      limit,
+      starting_after,
+    );
+
     const repositories = await this.repositoriesRepository.findByUser({
-      user_id,
+      id,
+      limit: checkLimit,
+      starting_after: checkStartingAfter,
     });
 
     return repositories;

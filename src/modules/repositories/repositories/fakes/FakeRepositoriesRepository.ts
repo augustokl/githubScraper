@@ -19,12 +19,14 @@ class RepositoriesRepository implements IRepositoriesRepository {
   }
 
   public async findByUser({
-    user_id,
+    id,
+    limit,
+    starting_after,
   }: IFindRepositoryFromUserDTO): Promise<Repository[]> {
-    const repositories = this.repositories.filter(
-      repository => repository.user_id === user_id,
-    );
-
+    const repositories = this.repositories
+      .filter(repository => repository.user_id === id)
+      .filter(repository => repository.id > starting_after)
+      .splice(0, limit);
     return repositories;
   }
 

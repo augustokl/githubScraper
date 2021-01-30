@@ -22,12 +22,16 @@ class RepositoriesRepository implements IRepositoriesRepository {
   }
 
   public async findByUser({
-    user_id,
+    id,
+    limit,
+    starting_after,
   }: IFindRepositoryFromUserDTO): Promise<Repository[]> {
     const findRepositories = await this.ormRepository.find({
       where: {
-        user_id,
+        user_id: id,
+        id: MoreThan(starting_after),
       },
+      take: limit,
       relations: ['owner'],
       order: {
         id: 'ASC',

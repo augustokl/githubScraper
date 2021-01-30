@@ -1,7 +1,8 @@
 import { injectable, inject } from 'tsyringe';
 
-import ISaveUserDTO from '../dtos/ISaveUserDTO';
+import ICreateUserDTO from '../dtos/ICreateUserDTO';
 import IUsersRepository from '../repositories/IUsersRepository';
+import User from '../infra/typeorm/entities/User';
 
 @injectable()
 class SaveUserService {
@@ -10,8 +11,10 @@ class SaveUserService {
     private usersRepository: IUsersRepository,
   ) {}
 
-  public async execute(data: ISaveUserDTO): Promise<void> {
-    await this.usersRepository.save(data);
+  public async execute(data: ICreateUserDTO): Promise<User> {
+    const user = await this.usersRepository.create(data);
+
+    return user;
   }
 }
 

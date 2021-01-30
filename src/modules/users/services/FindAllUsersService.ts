@@ -1,4 +1,6 @@
 import { injectable, inject } from 'tsyringe';
+
+import { validationPagination } from '@shared/utils/sharedValidation';
 import IFindAllUsersDTO from '../dtos/IFIndAllUsersDTO';
 import User from '../infra/typeorm/entities/User';
 
@@ -15,7 +17,15 @@ class FindAllService {
     starting_after,
     limit,
   }: IFindAllUsersDTO): Promise<User[]> {
-    const users = await this.usersRepository.findAll({ starting_after, limit });
+    const { checkLimit, checkStartingAfter } = validationPagination(
+      limit,
+      starting_after,
+    );
+
+    const users = await this.usersRepository.findAll({
+      starting_after: checkStartingAfter,
+      limit: checkLimit,
+    });
 
     return users;
   }

@@ -1,7 +1,9 @@
-import { getRepository, LessThan, MoreThan, Repository } from 'typeorm';
+import { getRepository, MoreThan, Repository } from 'typeorm';
+
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
-import ISaveUserDTO from '@modules/users/dtos/ISaveUserDTO';
+import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 import IFindAllUsersDTO from '@modules/users/dtos/IFIndAllUsersDTO';
+
 import User from '../entities/User';
 
 class UsersRepository implements IUsersRepository {
@@ -11,10 +13,12 @@ class UsersRepository implements IUsersRepository {
     this.ormRepository = getRepository(User);
   }
 
-  public async save(data: ISaveUserDTO): Promise<void> {
+  public async create(data: ICreateUserDTO): Promise<User> {
     const user = this.ormRepository.create(data);
 
-    await this.ormRepository.save(user);
+    const newUser = await this.ormRepository.save(user);
+
+    return newUser;
   }
 
   public async findUserById(id: number): Promise<User | undefined> {
