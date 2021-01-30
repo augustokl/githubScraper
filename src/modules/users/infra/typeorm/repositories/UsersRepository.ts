@@ -26,6 +26,10 @@ class UsersRepository implements IUsersRepository {
       where: {
         id,
       },
+      cache: {
+        id: `user:find:${id}`,
+        milliseconds: 10000,
+      },
     });
 
     return findUser;
@@ -42,6 +46,10 @@ class UsersRepository implements IUsersRepository {
       take: limit,
       order: {
         id: 'ASC',
+      },
+      cache: {
+        id: `user:find:${limit}-${starting_after}`,
+        milliseconds: 5000,
       },
     });
 

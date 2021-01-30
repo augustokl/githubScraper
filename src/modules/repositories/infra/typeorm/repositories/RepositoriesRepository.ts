@@ -36,6 +36,10 @@ class RepositoriesRepository implements IRepositoriesRepository {
       order: {
         id: 'ASC',
       },
+      cache: {
+        id: `repository:find:${id}-${limit}-${starting_after}`,
+        milliseconds: 5000,
+      },
     });
 
     return findRepositories;
@@ -54,6 +58,10 @@ class RepositoriesRepository implements IRepositoriesRepository {
       order: {
         id: 'ASC',
       },
+      cache: {
+        id: `repository:find:${limit}-${starting_after}`,
+        milliseconds: 5000,
+      },
     });
 
     return findRepositories;
@@ -63,6 +71,10 @@ class RepositoriesRepository implements IRepositoriesRepository {
     const findRepository = await this.ormRepository.findOne({
       where: { id },
       relations: ['owner'],
+      cache: {
+        id: `repository:find:${id}`,
+        milliseconds: 10000,
+      },
     });
 
     return findRepository;
