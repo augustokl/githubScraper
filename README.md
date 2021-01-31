@@ -6,7 +6,6 @@
     Scrapes User and Repository from GitHub's API and provides RESTful API which could return these datasets!
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
   </p>
 </p>
 
@@ -33,13 +32,18 @@
       <ul>
         <li>
           <a href="#user">User</a>
-           <ul>
-            <li><a href="#request-get-users">Get Users</a></li>
-            <li><a href="#request-get-a-user">Get a User</a></li>
-            <li><a href="#request-get-a-user-repositories">Get a User Repositories</a></li>
-            <li><a href="#request-get-repositories">Get Repositories</a></li>
-            <li><a href="#request-get-a-repository">Get a Repository</a></li>
-          </ul>
+            <ul>
+              <li><a href="#request-get-users">Get Users</a></li>
+              <li><a href="#request-get-a-user">Get a User</a></li>
+              <li><a href="#request-get-a-user-repositories">Get a User Repositories</a></li>
+            </ul>
+        </li>
+        <li>
+          <a href="#repository">Repository</a>
+            <ul>
+              <li><a href="#request-get-repositories">Get Repositories</a></li>
+              <li><a href="#request-get-a-repository">Get a Repository</a></li>
+            </ul>
         </li>
       </ul>
     </li>
@@ -381,8 +385,6 @@ How to get data for repository.
   }
 }
 ```
-
-<!-- CONTACT -->
 
 ## Contact
 
