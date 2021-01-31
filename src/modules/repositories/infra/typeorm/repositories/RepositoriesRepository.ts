@@ -70,6 +70,14 @@ class RepositoriesRepository implements IRepositoriesRepository {
     const hasOrder = starting_after ? { id: moreOrLess } : {};
 
     const findRepositories = await this.ormRepository.find({
+      select: [
+        'id',
+        'name',
+        'html_url',
+        'description',
+        'language',
+        'visibility',
+      ],
       where: hasOrder,
       relations: ['owner'],
       take: limit,

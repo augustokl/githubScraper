@@ -48,6 +48,7 @@ class UsersRepository implements IUsersRepository {
     const hasOrder = starting_after ? { id: moreOrLess } : {};
 
     const findUsers = await this.ormRepository.find({
+      select: ['id', 'name', 'login', 'url', 'bio', 'location', 'company'],
       where: hasOrder,
       take: limit,
       order: {
