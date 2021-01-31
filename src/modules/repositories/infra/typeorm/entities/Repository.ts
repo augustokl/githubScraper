@@ -65,7 +65,7 @@ class Repository {
   open_issues: number;
 
   @Column()
-  stargazers: number;
+  stargazers_count: number;
 
   @Column()
   watchers: number;

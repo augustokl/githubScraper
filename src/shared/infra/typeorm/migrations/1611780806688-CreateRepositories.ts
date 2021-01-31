@@ -58,7 +58,7 @@ export default class CreateRepositories1611780806688
             isNullable: true,
           },
           {
-            name: 'stargazers',
+            name: 'stargazers_count',
             type: 'int',
             isNullable: true,
           },

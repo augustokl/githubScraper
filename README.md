@@ -149,7 +149,7 @@ To get a local copy up and running follow these simple example steps.
 
 # Rest Api
 
-Examples how to use `Api`
+Examples how to use `API`
 
 ## User
 
@@ -167,32 +167,32 @@ How to get data for user.
 | order | string | query | asc | Can be one of `asc` or `desc`.
 <br>
 
-```curl
+```bash
  curl http://localhost:3333/users
 ```
 
 ### Response Get Users
 
-```curl
+```json
 [
   {
-      "id": 1,
-      "login": "mojombo",
-      "url": "https://api.github.com/users/mojombo",
-      "name": "Tom Preston-Werner",
-      "company": "@chatterbugapp, @redwoodjs, @preston-werner-ventures ",
-      "location": "San Francisco",
-      "bio": null
-    },
-    {
-      "id": 2,
-      "login": "defunkt",
-      "url": "https://api.github.com/users/defunkt",
-      "name": "Chris Wanstrath",
-      "company": null,
-      "location": null,
-      "bio": "🍔"
+    "id": 1,
+    "login": "mojombo",
+    "url": "https://api.github.com/users/mojombo",
+    "name": "Tom Preston-Werner",
+    "company": "@chatterbugapp, @redwoodjs, @preston-werner-ventures ",
+    "location": "San Francisco",
+    "bio": null
   },
+  {
+    "id": 2,
+    "login": "defunkt",
+    "url": "https://api.github.com/users/defunkt",
+    "name": "Chris Wanstrath",
+    "company": null,
+    "location": null,
+    "bio": "🍔"
+  }
 ]
 ```
 
@@ -206,37 +206,37 @@ How to get data for user.
 | id | integer | path | - |A user ID.
 <br>
 
-```curl
+```bash
  curl http://localhost:3333/users/1
 ```
 
 ### Response Get a User
 
-```curl
+```json
 {
-    "id": 1,
-    "login": "mojombo",
-    "url": "https://api.github.com/users/mojombo",
-    "avatar_url": "https://avatars.githubusercontent.com/u/1?v=4",
-    "gists_url": "https://api.github.com/users/mojombo/gists{/gist_id}",
-    "events_url": "https://api.github.com/users/mojombo/events{/privacy}",
-    "name": "Tom Preston-Werner",
-    "email": "tom@mojombo.com",
-    "hireable": null,
-    "company": "@chatterbugapp, @redwoodjs, @preston-werner-ventures ",
-    "location": "San Francisco",
-    "blog": "http://tom.preston-werner.com",
-    "bio": null,
-    "public_repos": 62,
-    "public_gists": 62,
-    "followers": 22323,
-    "following": 11,
-    "created_at": "2007-10-20T05:24:19.000Z",
-    "updated_at": "2021-01-12T15:53:34.000Z"
-  }
+  "id": 1,
+  "login": "mojombo",
+  "url": "https://api.github.com/users/mojombo",
+  "avatar_url": "https://avatars.githubusercontent.com/u/1?v=4",
+  "gists_url": "https://api.github.com/users/mojombo/gists{/gist_id}",
+  "events_url": "https://api.github.com/users/mojombo/events{/privacy}",
+  "name": "Tom Preston-Werner",
+  "email": "tom@mojombo.com",
+  "hireable": null,
+  "company": "@chatterbugapp, @redwoodjs, @preston-werner-ventures ",
+  "location": "San Francisco",
+  "blog": "http://tom.preston-werner.com",
+  "bio": null,
+  "public_repos": 62,
+  "public_gists": 62,
+  "followers": 22323,
+  "following": 11,
+  "created_at": "2007-10-20T05:24:19.000Z",
+  "updated_at": "2021-01-12T15:53:34.000Z"
+}
 ```
 
-### Request Get a User Repository
+### Request Get a User Repositories
 
 `GET /users/:id/repositories`
 
@@ -249,36 +249,139 @@ How to get data for user.
 | order | string | query | asc | Can be one of `asc` or `desc`.
 <br>
 
-```curl
+```bash
  curl http://localhost:3333/users/1/repositories
 ```
 
-### Response Get a User Repository
+### Response Get a User Repositories
 
-```curl
+```json
 [
   {
-    "id": 1,
-    "name": "grit",
-    "html_url": "https://github.com/mojombo/grit",
-    "subscription_url": "https://api.github.com/repos/mojombo/grit/subscription",
-    "clone_url": "https://github.com/mojombo/grit.git",
-    "description": "**Grit is no longer maintained. Check out libgit2/rugged.** Grit gives you object oriented read/write access to Git repositories via Ruby.",
-    "language": "Ruby",
-    "size": 7954,
-    "forks": 531,
-    "open_issues": 26,
-    "stargazers": null,
-    "watchers": 1904,
-    "created_at": "2007-10-29T14:37:16.000Z",
-    "updated_at": "2021-01-25T18:00:32.000Z",
-    "pushed_at": "2020-10-01T03:55:32.000Z"
-  },
+    "id": 26899533,
+    "name": "30daysoflaptops.github.io",
+    "html_url": "https://github.com/mojombo/30daysoflaptops.github.io",
+    "subscription_url": "https://api.github.com/repos/mojombo/30daysoflaptops.github.io/subscription",
+    "clone_url": "https://github.com/mojombo/30daysoflaptops.github.io.git",
+    "description": null,
+    "language": "CSS",
+    "size": 1197,
+    "forks": 2,
+    "open_issues": 0,
+    "stargazers_count": 7,
+    "watchers": 7,
+    "created_at": "2014-11-20T06:42:06.000Z",
+    "updated_at": "2021-01-13T19:44:03.000Z",
+    "pushed_at": "2014-11-20T06:42:47.000Z"
+  }
 ]
+```
+
+## Repository
+
+How to get data for repository.
+
+### Request Get Repositories
+
+`GET /repositories`
+
+<b>Parameters</b>
+| Name | Type | In | Default | Description |
+|-------|-------|-----|--------------|--------------|
+| limit | integer | query | 10 | Results per page (max 100)
+| starting_after | integer | query | - | A user ID. Only return users with an ID greater than this ID.
+| order | string | query | asc | Can be one of `asc` or `desc`.
+<br>
+
+```bash
+ curl http://localhost:3333/repositories
+```
+
+### Response Get Repositories
+
+```json
+[
+  {
+    "id": 61,
+    "name": "glowstick",
+    "html_url": "https://github.com/mojombo/glowstick",
+    "clone_url": "https://github.com/mojombo/glowstick.git",
+    "description": "A realtime, OpenGL graphing library for Ruby",
+    "language": "Ruby",
+    "owner": {
+      "id": 1,
+      "login": "mojombo",
+      "name": "Tom Preston-Werner",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1?v=4",
+      "url": "https://api.github.com/users/mojombo",
+      "api_url": "http://localhost:3333/users/1"
+    }
+  },
+  {
+    "id": 28,
+    "name": "god",
+    "html_url": "https://github.com/mojombo/god",
+    "clone_url": "https://github.com/mojombo/god.git",
+    "description": "Ruby process monitor",
+    "language": "Ruby",
+    "owner": {
+      "id": 1,
+      "login": "mojombo",
+      "name": "Tom Preston-Werner",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1?v=4",
+      "url": "https://api.github.com/users/mojombo",
+      "api_url": "http://localhost:3333/users/1"
+    }
+  }
+]
+```
+
+### Request Get a Repository
+
+`GET /users/:id`
+
+<b>Parameters</b>
+| Name | Type | In | Default | Description |
+|-------|-------|-----|--------------|--------------|
+| id | integer | path | - |A user ID.
+<br>
+
+```bash
+ curl http://localhost:3333/repositories/1
+```
+
+### Response Get a Repository
+
+```json
+{
+  "id": 1,
+  "name": "grit",
+  "html_url": "https://github.com/mojombo/grit",
+  "subscription_url": "https://api.github.com/repos/mojombo/grit/subscription",
+  "clone_url": "https://github.com/mojombo/grit.git",
+  "description": "**Grit is no longer maintained. Check out libgit2/rugged.** Grit gives you object oriented read/write access to Git repositories via Ruby.",
+  "language": "Ruby",
+  "size": 7954,
+  "forks": 531,
+  "open_issues": 26,
+  "stargazers_count": 1904,
+  "watchers": 1904,
+  "created_at": "2007-10-29T14:37:16.000Z",
+  "updated_at": "2021-01-25T18:00:32.000Z",
+  "pushed_at": "2020-10-01T03:55:32.000Z",
+  "owner": {
+    "id": 1,
+    "login": "mojombo",
+    "name": "Tom Preston-Werner",
+    "avatar_url": "https://avatars.githubusercontent.com/u/1?v=4",
+    "url": "https://api.github.com/users/mojombo",
+    "api_url": "http://localhost:3333/users/1"
+  }
+}
+```
 
 <!-- CONTACT -->
 
 ## Contact
 
 Project Link: [GitHubScraper](https://github.com/augustokl/githubScraper)
-```

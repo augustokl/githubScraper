@@ -1,4 +1,4 @@
-import { Request, Response, Re } from 'express';
+import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 
@@ -7,6 +7,7 @@ import ICreateRepositoryDTO from '@modules/repositories/dtos/ICreateRepositoryDT
 import CreateRepositoryService from '@modules/repositories/services/CreateRepositoryService';
 import FindAllRepositoriesService from '@modules/repositories/services/FindAllRepositoriesService';
 import FindRepositoryService from '@modules/repositories/services/FindRepositoryService';
+import IFindAllRepositoriesDTO from '@modules/repositories/dtos/IFindAllRepositoriesDTO';
 
 class RepositoriesController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -19,8 +20,8 @@ class RepositoriesController {
     const repositories = await findAllRepositoriesService.execute({
       limit: Number(limit),
       starting_after: Number(starting_after),
-      order: String(order),
-    });
+      order,
+    } as IFindAllRepositoriesDTO);
 
     return response.json(classToClass(repositories));
   }
