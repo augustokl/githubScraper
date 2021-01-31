@@ -36,7 +36,9 @@
            <ul>
             <li><a href="#request-get-users">Get Users</a></li>
             <li><a href="#request-get-a-user">Get a User</a></li>
-            <li><a href="#request-get-a-user-repository">Get a User Repository</a></li>
+            <li><a href="#request-get-a-user-repositories">Get a User Repositories</a></li>
+            <li><a href="#request-get-repositories">Get Repositories</a></li>
+            <li><a href="#request-get-a-repository">Get a Repository</a></li>
           </ul>
         </li>
       </ul>
@@ -131,7 +133,7 @@ To get a local copy up and running follow these simple example steps.
 4. Restore database.
 
    ```sh
-   cat dump_githubscraper:30-01-2021_20_55_29.sql | docker exec -i apiscraper_db_1 psql -U postgres
+   cat dump_githubscraper:31-01-2021_15_20_58.sql | docker exec -i githubscraper-db psql -U postgres
    ```
 
 5. Server
@@ -338,7 +340,7 @@ How to get data for repository.
 
 ### Request Get a Repository
 
-`GET /users/:id`
+`GET /repositories/:id`
 
 <b>Parameters</b>
 | Name | Type | In | Default | Description |
