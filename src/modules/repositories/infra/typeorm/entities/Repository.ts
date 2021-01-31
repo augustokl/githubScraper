@@ -34,7 +34,7 @@ class Repository {
       name: value.name,
       avatar_url: value.avatar_url,
       url: value.url,
-      api_url: `${process.env.APP_API_URL}/users/${value.id}`,
+      api_url: `${process.env.APP_API_URL}:${process.env.APP_API_PORT}/users/${value.id}`,
     }),
     { toClassOnly: true },
   )
