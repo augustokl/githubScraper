@@ -26,9 +26,21 @@ class UsersRepository implements IUsersRepository {
   public async findAll({
     starting_after,
     limit,
+    order,
   }: IFindAllUsersDTO): Promise<User[]> {
+    if (order === 'ASC') {
+      const users = this.users
+        .filter(currentUser => currentUser.id > starting_after)
+        .slice(0, limit);
+
+      return users;
+    }
+
     const users = this.users
-      .filter(currentUser => currentUser.id > starting_after)
+      .reverse()
+      .filter(currentUser =>
+        currentUser.id < starting_after ? starting_after : this.users.length,
+      )
       .slice(0, limit);
 
     return users;

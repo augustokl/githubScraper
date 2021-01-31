@@ -25,6 +25,16 @@ export default class CreateUsers1611716188975 implements MigrationInterface {
             isNullable: true,
           },
           {
+            name: 'gists_url',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
+            name: 'events_url',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
             name: 'name',
             type: 'varchar',
             isNullable: true,

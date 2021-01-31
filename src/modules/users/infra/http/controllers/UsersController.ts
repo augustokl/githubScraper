@@ -12,13 +12,14 @@ import FindUserRepositoriesService from '@modules/users/services/FindUserReposit
 
 class UsersController {
   public async index(request: Request, response: Response): Promise<Response> {
-    const { limit, starting_after } = request.query;
+    const { limit, starting_after, order } = request.query;
 
     const findAllUsersService = container.resolve(FindAllUsersService);
 
     const users = await findAllUsersService.execute({
       limit: Number(limit),
       starting_after: Number(starting_after),
+      order: String(order),
     });
 
     return response.json(users);
@@ -39,7 +40,7 @@ class UsersController {
     response: Response,
   ): Promise<Response> {
     const { id } = request.params;
-    const { limit, starting_after } = request.query;
+    const { limit, starting_after, order } = request.query;
 
     const findUserRepositoriesService = container.resolve(
       FindUserRepositoriesService,
@@ -49,6 +50,7 @@ class UsersController {
       id: Number(id),
       limit: Number(limit),
       starting_after: Number(starting_after),
+      order,
     });
 
     return response.json(classToClass(repositories));

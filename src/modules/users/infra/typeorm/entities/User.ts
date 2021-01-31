@@ -21,6 +21,12 @@ class User {
   avatar_url: string;
 
   @Column()
+  gists_url: string;
+
+  @Column()
+  events_url: string;
+
+  @Column()
   name: string;
 
   @Column()

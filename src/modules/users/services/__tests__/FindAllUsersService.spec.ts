@@ -18,6 +18,8 @@ describe('FindAllUsers', () => {
         id: i,
         login: 'johndoe',
         url: 'github.com/johndoe',
+        events_url: 'github.com/johndoe',
+        gists_url: 'github.com/johndoe',
         avatar_url: 'gravatar',
         name: 'John Doe',
         email: 'johndoe@teste.com',
@@ -39,6 +41,7 @@ describe('FindAllUsers', () => {
     const users = await findAllUsersService.execute({
       limit: 0,
       starting_after: 0,
+      order: 'ASC',
     });
 
     expect(users).toHaveLength(10);
@@ -47,10 +50,24 @@ describe('FindAllUsers', () => {
     );
   });
 
+  it('should be able to find users in DESC order', async () => {
+    const repositories = await findAllUsersService.execute({
+      limit: 0,
+      starting_after: 0,
+      order: 'DESC',
+    });
+
+    expect(repositories).toHaveLength(10);
+    expect(repositories).toEqual(
+      expect.arrayContaining([expect.objectContaining({ id: 149 })]),
+    );
+  });
+
   it('should not be able to find more than 100 users', async () => {
     const users = await findAllUsersService.execute({
       limit: 150,
       starting_after: 0,
+      order: 'ASC',
     });
 
     expect(users).toHaveLength(100);
@@ -63,6 +80,7 @@ describe('FindAllUsers', () => {
     const users = await findAllUsersService.execute({
       limit: -10,
       starting_after: 0,
+      order: 'ASC',
     });
 
     expect(users).toHaveLength(10);
@@ -75,6 +93,7 @@ describe('FindAllUsers', () => {
     const users = await findAllUsersService.execute({
       limit: 5,
       starting_after: 1,
+      order: 'ASC',
     });
 
     expect(users).toHaveLength(5);
@@ -87,6 +106,7 @@ describe('FindAllUsers', () => {
     const users = await findAllUsersService.execute({
       limit: 5,
       starting_after: -1,
+      order: 'ASC',
     });
 
     expect(users).toHaveLength(5);

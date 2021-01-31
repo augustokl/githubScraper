@@ -22,20 +22,49 @@ class RepositoriesRepository implements IRepositoriesRepository {
     id,
     limit,
     starting_after,
+    order,
   }: IFindRepositoryFromUserDTO): Promise<Repository[]> {
+    if (order === 'ASC') {
+      const repositories = this.repositories
+        .filter(repository => repository.user_id === id)
+        .filter(repository => repository.id > starting_after)
+        .splice(0, limit);
+      return repositories;
+    }
+
     const repositories = this.repositories
       .filter(repository => repository.user_id === id)
-      .filter(repository => repository.id > starting_after)
+      .reverse()
+      .filter(repository =>
+        repository.id < starting_after
+          ? starting_after
+          : this.repositories.length,
+      )
       .splice(0, limit);
+
     return repositories;
   }
 
   public async findAll({
     starting_after,
     limit,
+    order,
   }: IFindAllRepositoriesDTO): Promise<Repository[]> {
+    if (order === 'ASC') {
+      const repositories = this.repositories
+        .filter(repository => repository.id > starting_after)
+        .splice(0, limit);
+
+      return repositories;
+    }
+
     const repositories = this.repositories
-      .filter(repository => repository.id > starting_after)
+      .reverse()
+      .filter(repository =>
+        repository.id < starting_after
+          ? starting_after
+          : this.repositories.length,
+      )
       .splice(0, limit);
 
     return repositories;

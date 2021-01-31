@@ -3,7 +3,7 @@ interface IPagination {
   checkStartingAfter: number;
 }
 
-export default function validationPagination(
+export default function validatePagination(
   limit: number,
   startingAfter: number,
 ): IPagination {

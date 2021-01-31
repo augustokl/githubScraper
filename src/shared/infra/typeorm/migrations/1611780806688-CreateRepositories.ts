@@ -25,13 +25,31 @@ export default class CreateRepositories1611780806688
             type: 'varchar',
           },
           {
+            name: 'subscription_url',
+            type: 'varchar',
+          },
+          {
+            name: 'clone_url',
+            type: 'varchar',
+          },
+          {
             name: 'description',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
+            name: 'visibility',
             type: 'varchar',
             isNullable: true,
           },
           {
             name: 'language',
             type: 'varchar',
+            isNullable: true,
+          },
+          {
+            name: 'size',
+            type: 'int',
             isNullable: true,
           },
           {
@@ -51,6 +69,16 @@ export default class CreateRepositories1611780806688
           },
           {
             name: 'watchers',
+            type: 'int',
+            isNullable: true,
+          },
+          {
+            name: 'subscribers_count',
+            type: 'int',
+            isNullable: true,
+          },
+          {
+            name: 'network_count',
             type: 'int',
             isNullable: true,
           },

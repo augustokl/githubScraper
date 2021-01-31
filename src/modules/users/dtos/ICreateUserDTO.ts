@@ -3,6 +3,8 @@ export default interface ICreateUserDTO {
   login: string;
   url: string;
   avatar_url: string;
+  gists_url: string;
+  events_url: string;
   name: string;
   email: string;
   hireable: string;

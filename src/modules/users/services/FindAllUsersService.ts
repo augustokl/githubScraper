@@ -16,6 +16,7 @@ class FindAllService {
   public async execute({
     starting_after,
     limit,
+    order,
   }: IFindAllUsersDTO): Promise<User[]> {
     const { checkLimit, checkStartingAfter } = validationPagination(
       limit,
@@ -25,6 +26,7 @@ class FindAllService {
     const users = await this.usersRepository.findAll({
       starting_after: checkStartingAfter,
       limit: checkLimit,
+      order,
     });
 
     return users;

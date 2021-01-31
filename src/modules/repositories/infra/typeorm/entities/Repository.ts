@@ -44,10 +44,22 @@ class Repository {
   html_url: string;
 
   @Column()
+  subscription_url: string;
+
+  @Column()
+  clone_url: string;
+
+  @Column()
   description: string;
 
   @Column()
   language: string;
+
+  @Column()
+  visibility: string;
+
+  @Column()
+  size: number;
 
   @Column()
   forks: number;
@@ -60,6 +72,12 @@ class Repository {
 
   @Column()
   watchers: number;
+
+  @Column()
+  subscribers_count: number;
+
+  @Column()
+  network_count: number;
 
   @CreateDateColumn()
   created_at: Date;

@@ -1,4 +1,4 @@
-import { getRepository, MoreThan, Repository } from 'typeorm';
+import { getRepository, LessThan, MoreThan, Repository } from 'typeorm';
 
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
@@ -38,17 +38,23 @@ class UsersRepository implements IUsersRepository {
   public async findAll({
     starting_after,
     limit,
+    order,
   }: IFindAllUsersDTO): Promise<User[]> {
+    const moreOrLess =
+      order.toLocaleUpperCase() === 'DESC'
+        ? LessThan(starting_after)
+        : MoreThan(starting_after);
+    const setOrder = order.toLocaleUpperCase() === 'DESC' ? 'DESC' : 'ASC';
+    const hasOrder = starting_after ? { id: moreOrLess } : {};
+
     const findUsers = await this.ormRepository.find({
-      where: {
-        id: MoreThan(starting_after),
-      },
+      where: hasOrder,
       take: limit,
       order: {
-        id: 'ASC',
+        id: setOrder,
       },
       cache: {
-        id: `user:find:${limit}-${starting_after}`,
+        id: `user:find:${limit}-${starting_after}-${setOrder}`,
         milliseconds: 5000,
       },
     });

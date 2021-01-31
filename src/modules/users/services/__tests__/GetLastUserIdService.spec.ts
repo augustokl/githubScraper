@@ -20,6 +20,8 @@ describe('GetLastUser', () => {
         login: 'johndoe',
         url: 'github.com/johndoe',
         avatar_url: 'gravatar',
+        events_url: 'github.com/johndoe',
+        gists_url: 'github.com/johndoe',
         name: 'John Doe',
         email: 'johndoe@teste.com',
         hireable: 'null',

@@ -16,6 +16,7 @@ class FindAllRepositoriesService {
   public async execute({
     limit,
     starting_after,
+    order,
   }: IFindAllRepositoriesDTO): Promise<Repository[]> {
     const { checkLimit, checkStartingAfter } = validationPagination(
       limit,
@@ -25,6 +26,7 @@ class FindAllRepositoriesService {
     const respositories = this.repositoriesRepository.findAll({
       limit: checkLimit,
       starting_after: checkStartingAfter,
+      order,
     });
 
     return respositories;

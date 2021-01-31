@@ -18,6 +18,8 @@ describe('FindUser', () => {
         id: i,
         login: 'johndoe',
         url: 'github.com/johndoe',
+        events_url: 'github.com/johndoe',
+        gists_url: 'github.com/johndoe',
         avatar_url: 'gravatar',
         name: 'John Doe',
         email: 'johndoe@teste.com',

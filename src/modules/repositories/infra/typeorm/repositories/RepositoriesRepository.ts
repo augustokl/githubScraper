@@ -1,5 +1,10 @@
 import Repository from '@modules/repositories/infra/typeorm/entities/Repository';
-import { getRepository, Repository as OrmRepository, MoreThan } from 'typeorm';
+import {
+  getRepository,
+  Repository as OrmRepository,
+  MoreThan,
+  LessThan,
+} from 'typeorm';
 
 import IFindRepositoryFromUserDTO from '@modules/repositories/dtos/IFindRepositoryFromUserDTO';
 import ICreateRepositoryDTO from '@modules/repositories/dtos/ICreateRepositoryDTO';
@@ -25,19 +30,26 @@ class RepositoriesRepository implements IRepositoriesRepository {
     id,
     limit,
     starting_after,
+    order,
   }: IFindRepositoryFromUserDTO): Promise<Repository[]> {
+    const moreOrLess =
+      order.toLocaleUpperCase() === 'DESC'
+        ? LessThan(starting_after)
+        : MoreThan(starting_after);
+    const setOrder = order.toLocaleUpperCase() === 'DESC' ? 'DESC' : 'ASC';
+    const hasOrder = starting_after
+      ? { user_id: id, id: moreOrLess }
+      : { user_id: id };
+
     const findRepositories = await this.ormRepository.find({
-      where: {
-        user_id: id,
-        id: MoreThan(starting_after),
-      },
+      where: hasOrder,
       take: limit,
       relations: ['owner'],
       order: {
-        id: 'ASC',
+        id: setOrder,
       },
       cache: {
-        id: `repository:find:${id}-${limit}-${starting_after}`,
+        id: `repository:find:${id}-${limit}-${starting_after}-${setOrder}`,
         milliseconds: 5000,
       },
     });
@@ -48,18 +60,24 @@ class RepositoriesRepository implements IRepositoriesRepository {
   public async findAll({
     starting_after,
     limit,
+    order,
   }: IFindAllRepositoriesDTO): Promise<Repository[]> {
+    const moreOrLess =
+      order.toLocaleUpperCase() === 'DESC'
+        ? LessThan(starting_after)
+        : MoreThan(starting_after);
+    const setOrder = order.toLocaleUpperCase() === 'DESC' ? 'DESC' : 'ASC';
+    const hasOrder = starting_after ? { id: moreOrLess } : {};
+
     const findRepositories = await this.ormRepository.find({
-      where: {
-        id: MoreThan(starting_after),
-      },
+      where: hasOrder,
       relations: ['owner'],
       take: limit,
       order: {
-        id: 'ASC',
+        id: setOrder,
       },
       cache: {
-        id: `repository:find:${limit}-${starting_after}`,
+        id: `repository:find:${limit}-${starting_after}-${setOrder}`,
         milliseconds: 5000,
       },
     });

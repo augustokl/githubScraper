@@ -4,7 +4,7 @@ import validationPagination from '@shared/utils/sharedValidation';
 
 import IRepositoriesRepository from '@modules/repositories/repositories/IRepositoriesRepository';
 import Repository from '@modules/repositories/infra/typeorm/entities/Repository';
-import IFIndUserRepositoriesDTO from '../dtos/IFIndUserRepositoriesDTO copy';
+import IFIndUserRepositoriesDTO from '../dtos/IFIndUserRepositoriesDTO';
 
 @injectable()
 class FindRepositoriesByUserService {
@@ -17,6 +17,7 @@ class FindRepositoriesByUserService {
     id,
     limit,
     starting_after,
+    order,
   }: IFIndUserRepositoriesDTO): Promise<Repository[]> {
     const { checkLimit, checkStartingAfter } = validationPagination(
       limit,
@@ -27,6 +28,7 @@ class FindRepositoriesByUserService {
       id,
       limit: checkLimit,
       starting_after: checkStartingAfter,
+      order,
     });
 
     return repositories;

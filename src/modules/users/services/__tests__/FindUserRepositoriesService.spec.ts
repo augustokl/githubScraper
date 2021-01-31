@@ -31,6 +31,8 @@ describe('FindUserRepositories', () => {
         id: i,
         login: 'johndoe',
         url: 'github.com/johndoe',
+        events_url: 'github.com/johndoe',
+        gists_url: 'github.com/johndoe',
         avatar_url: 'gravatar',
         name: 'John Doe',
         email: 'johndoe@teste.com',
@@ -54,12 +56,18 @@ describe('FindUserRepositories', () => {
         name: 'test',
         user_id: 1,
         html_url: 'github.com/JohnDoe/test',
+        subscription_url: 'github.com/JohnDoe/test',
+        clone_url: 'github.com/JohnDoe/test',
         description: 'Test repository',
+        visibility: 'true',
+        size: 1,
         language: 'Typescript',
         forks: i,
         open_issues: i,
         stargazers: i,
         watchers: i,
+        network_count: i,
+        subscribers_count: i,
         created_at: new Date(),
         updated_at: new Date(),
         pushed_at: new Date(),
@@ -71,6 +79,7 @@ describe('FindUserRepositories', () => {
       id: 1,
       limit: 5,
       starting_after: 1,
+      order: 'ASC',
     });
 
     expect(repositories).toHaveLength(5);
@@ -84,11 +93,26 @@ describe('FindUserRepositories', () => {
       id: 1,
       limit: 0,
       starting_after: 0,
+      order: 'ASC',
     });
 
     expect(repositories).toHaveLength(10);
     expect(repositories).toEqual(
       expect.arrayContaining([expect.objectContaining({ id: 1 })]),
+    );
+  });
+
+  it('should be able to find repositories in DESC order', async () => {
+    const repositories = await findUserRepositoriesService.execute({
+      id: 1,
+      limit: 0,
+      starting_after: 0,
+      order: 'DESC',
+    });
+
+    expect(repositories).toHaveLength(10);
+    expect(repositories).toEqual(
+      expect.arrayContaining([expect.objectContaining({ id: 149 })]),
     );
   });
 
@@ -98,6 +122,7 @@ describe('FindUserRepositories', () => {
         id: 10,
         limit: 10,
         starting_after: 0,
+        order: 'ASC',
       }),
     ).toMatchObject({});
   });
@@ -107,6 +132,7 @@ describe('FindUserRepositories', () => {
       id: 1,
       limit: 150,
       starting_after: 0,
+      order: 'ASC',
     });
 
     expect(repositories).toHaveLength(100);
@@ -120,6 +146,7 @@ describe('FindUserRepositories', () => {
       id: 1,
       limit: -10,
       starting_after: 0,
+      order: 'ASC',
     });
 
     expect(repositories).toHaveLength(10);
@@ -133,6 +160,7 @@ describe('FindUserRepositories', () => {
       id: 1,
       limit: 5,
       starting_after: -1,
+      order: 'ASC',
     });
 
     expect(repositories).toHaveLength(5);
