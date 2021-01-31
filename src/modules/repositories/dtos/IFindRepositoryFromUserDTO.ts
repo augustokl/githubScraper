@@ -1,6 +1,5 @@
-export default interface IFindRepositoryFromUserDTO {
+import IRequestQueryDTO from '@shared/dtos/IRequestQueryDTO';
+
+export default interface IFindRepositoryFromUserDTO extends IRequestQueryDTO {
   id: number;
-  starting_after: number;
-  limit: number;
-  order: string;
 }

@@ -33,10 +33,7 @@ class RepositoriesRepository implements IRepositoriesRepository {
     order,
   }: IFindRepositoryFromUserDTO): Promise<Repository[]> {
     const moreOrLess =
-      order.toLocaleUpperCase() === 'DESC'
-        ? LessThan(starting_after)
-        : MoreThan(starting_after);
-    const setOrder = order.toLocaleUpperCase() === 'DESC' ? 'DESC' : 'ASC';
+      order === 'DESC' ? LessThan(starting_after) : MoreThan(starting_after);
     const hasOrder = starting_after
       ? { user_id: id, id: moreOrLess }
       : { user_id: id };
@@ -44,12 +41,11 @@ class RepositoriesRepository implements IRepositoriesRepository {
     const findRepositories = await this.ormRepository.find({
       where: hasOrder,
       take: limit,
-      relations: ['owner'],
       order: {
-        id: setOrder,
+        id: order,
       },
       cache: {
-        id: `repository:find:${id}-${limit}-${starting_after}-${setOrder}`,
+        id: `repository:find:${id}-${limit}-${starting_after}-${order}`,
         milliseconds: 5000,
       },
     });
@@ -63,10 +59,7 @@ class RepositoriesRepository implements IRepositoriesRepository {
     order,
   }: IFindAllRepositoriesDTO): Promise<Repository[]> {
     const moreOrLess =
-      order.toLocaleUpperCase() === 'DESC'
-        ? LessThan(starting_after)
-        : MoreThan(starting_after);
-    const setOrder = order.toLocaleUpperCase() === 'DESC' ? 'DESC' : 'ASC';
+      order === 'DESC' ? LessThan(starting_after) : MoreThan(starting_after);
     const hasOrder = starting_after ? { id: moreOrLess } : {};
 
     const findRepositories = await this.ormRepository.find({
@@ -76,16 +69,16 @@ class RepositoriesRepository implements IRepositoriesRepository {
         'html_url',
         'description',
         'language',
-        'visibility',
+        'clone_url',
       ],
       where: hasOrder,
       relations: ['owner'],
       take: limit,
       order: {
-        id: setOrder,
+        id: order,
       },
       cache: {
-        id: `repository:find:${limit}-${starting_after}-${setOrder}`,
+        id: `repository:find:${limit}-${starting_after}-${order}`,
         milliseconds: 5000,
       },
     });

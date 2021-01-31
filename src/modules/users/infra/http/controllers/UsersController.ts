@@ -3,6 +3,8 @@ import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
+import IFIndUserRepositoriesDTO from '@modules/users/dtos/IFIndUserRepositoriesDTO';
+import IFindAllUsersDTO from '@modules/users/dtos/IFIndAllUsersDTO';
 
 import CreateUserService from '@modules/users/services/CreateUserService';
 import GetLastUserIdService from '@modules/users/services/GetLastUserIdService';
@@ -19,8 +21,8 @@ class UsersController {
     const users = await findAllUsersService.execute({
       limit: Number(limit),
       starting_after: Number(starting_after),
-      order: String(order),
-    });
+      order,
+    } as IFindAllUsersDTO);
 
     return response.json(users);
   }
@@ -51,7 +53,7 @@ class UsersController {
       limit: Number(limit),
       starting_after: Number(starting_after),
       order,
-    });
+    } as IFIndUserRepositoriesDTO);
 
     return response.json(classToClass(repositories));
   }

@@ -1,5 +1,5 @@
-export default interface IFindAllRepositoriesDTO {
-  starting_after: number;
-  limit: number;
-  order: string;
-}
+import IRequestQueryDTO from '@shared/dtos/IRequestQueryDTO';
+
+type IFindAllRepositoriesDTO = IRequestQueryDTO;
+
+export default IFindAllRepositoriesDTO;

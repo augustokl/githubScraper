@@ -1,6 +1,6 @@
 import { injectable, inject } from 'tsyringe';
 
-import validationPagination from '@shared/utils/sharedValidation';
+import validatePagination from '@shared/utils/sharedValidation';
 
 import IRepositoriesRepository from '@modules/repositories/repositories/IRepositoriesRepository';
 import Repository from '@modules/repositories/infra/typeorm/entities/Repository';
@@ -19,7 +19,7 @@ class FindRepositoriesByUserService {
     starting_after,
     order,
   }: IFIndUserRepositoriesDTO): Promise<Repository[]> {
-    const { checkLimit, checkStartingAfter } = validationPagination(
+    const { checkLimit, checkStartingAfter } = validatePagination(
       limit,
       starting_after,
     );

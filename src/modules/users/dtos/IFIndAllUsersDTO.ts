@@ -1,5 +1,5 @@
-export default interface IFindAllUsersDTO {
-  starting_after: number;
-  limit: number;
-  order: string;
-}
+import IRequestQueryDTO from '@shared/dtos/IRequestQueryDTO';
+
+type IFindAllUsersDTO = IRequestQueryDTO;
+
+export default IFindAllUsersDTO;

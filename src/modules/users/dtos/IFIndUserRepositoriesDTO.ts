@@ -1,6 +1,5 @@
-export default interface IFIndUserRepositoriesDTO {
+import IRequestQueryDTO from '@shared/dtos/IRequestQueryDTO';
+
+export default interface IFIndUserRepositoriesDTO extends IRequestQueryDTO {
   id: number;
-  starting_after: number;
-  limit: number;
-  order: string;
 }

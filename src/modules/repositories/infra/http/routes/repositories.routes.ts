@@ -6,7 +6,15 @@ import RepositoriesController from '../controllers/RepositoriesController';
 const repositoriesRouter = Router();
 const repositoriesController = new RepositoriesController();
 
-repositoriesRouter.get('/', repositoriesController.index);
+repositoriesRouter.get(
+  '/',
+  celebrate({
+    [Segments.QUERY]: {
+      order: Joi.string().uppercase().valid('ASC', 'DESC').failover('ASC'),
+    },
+  }),
+  repositoriesController.index,
+);
 repositoriesRouter.get(
   '/:id',
   celebrate({

@@ -56,9 +56,6 @@ class Repository {
   language: string;
 
   @Column()
-  visibility: string;
-
-  @Column()
   size: number;
 
   @Column()
@@ -72,12 +69,6 @@ class Repository {
 
   @Column()
   watchers: number;
-
-  @Column()
-  subscribers_count: number;
-
-  @Column()
-  network_count: number;
 
   @CreateDateColumn()
   created_at: Date;

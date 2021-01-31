@@ -38,11 +38,6 @@ export default class CreateRepositories1611780806688
             isNullable: true,
           },
           {
-            name: 'visibility',
-            type: 'varchar',
-            isNullable: true,
-          },
-          {
             name: 'language',
             type: 'varchar',
             isNullable: true,
@@ -73,16 +68,6 @@ export default class CreateRepositories1611780806688
             isNullable: true,
           },
           {
-            name: 'subscribers_count',
-            type: 'int',
-            isNullable: true,
-          },
-          {
-            name: 'network_count',
-            type: 'int',
-            isNullable: true,
-          },
-          {
             name: 'created_at',
             type: 'timestamp',
           },
@@ -99,7 +84,7 @@ export default class CreateRepositories1611780806688
         ],
         foreignKeys: [
           {
-            name: 'TokenUser',
+            name: 'UserRepository',
             referencedTableName: 'users',
             referencedColumnNames: ['id'],
             columnNames: ['user_id'],

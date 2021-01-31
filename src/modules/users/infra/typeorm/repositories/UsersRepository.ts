@@ -41,10 +41,7 @@ class UsersRepository implements IUsersRepository {
     order,
   }: IFindAllUsersDTO): Promise<User[]> {
     const moreOrLess =
-      order.toLocaleUpperCase() === 'DESC'
-        ? LessThan(starting_after)
-        : MoreThan(starting_after);
-    const setOrder = order.toLocaleUpperCase() === 'DESC' ? 'DESC' : 'ASC';
+      order === 'DESC' ? LessThan(starting_after) : MoreThan(starting_after);
     const hasOrder = starting_after ? { id: moreOrLess } : {};
 
     const findUsers = await this.ormRepository.find({
@@ -52,10 +49,10 @@ class UsersRepository implements IUsersRepository {
       where: hasOrder,
       take: limit,
       order: {
-        id: setOrder,
+        id: order,
       },
       cache: {
-        id: `user:find:${limit}-${starting_after}-${setOrder}`,
+        id: `user:find:${limit}-${starting_after}-${order}`,
         milliseconds: 5000,
       },
     });

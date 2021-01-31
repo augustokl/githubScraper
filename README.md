@@ -34,8 +34,9 @@
         <li>
           <a href="#user">User</a>
            <ul>
-            <li><a href="#request-get-users">Request Get Users</a></li>
-            <li><a href="#response-get-users">Response Get Users</a></li>
+            <li><a href="#request-get-users">Get Users</a></li>
+            <li><a href="#request-get-a-user">Get a User</a></li>
+            <li><a href="#request-get-a-user-repository">Get a User Repository</a></li>
           </ul>
         </li>
       </ul>
@@ -159,10 +160,11 @@ How to get data for user.
 `GET /users`
 
 <b>Parameters</b>
-| Name | Type | In | Description |
-|-------|-------|-----|--------------|
-| limit | integer | query | Results per page (max 100)
-| starting_after | integer | query | A user ID. Only return users with an ID greater than this ID. ||
+| Name | Type | In | Default | Description |
+|-------|-------|-----|--------------|--------------|
+| limit | integer | query | 10 | Results per page (max 100)
+| starting_after | integer | query | - | A user ID. Only return users with an ID greater than this ID.
+| order | string | query | asc | Can be one of `asc` or `desc`.
 <br>
 
 ```curl
@@ -172,11 +174,52 @@ How to get data for user.
 ### Response Get Users
 
 ```curl
+[
+  {
+      "id": 1,
+      "login": "mojombo",
+      "url": "https://api.github.com/users/mojombo",
+      "name": "Tom Preston-Werner",
+      "company": "@chatterbugapp, @redwoodjs, @preston-werner-ventures ",
+      "location": "San Francisco",
+      "bio": null
+    },
+    {
+      "id": 2,
+      "login": "defunkt",
+      "url": "https://api.github.com/users/defunkt",
+      "name": "Chris Wanstrath",
+      "company": null,
+      "location": null,
+      "bio": "🍔"
+  },
+]
+```
+
+### Request Get a User
+
+`GET /users/:id`
+
+<b>Parameters</b>
+| Name | Type | In | Default | Description |
+|-------|-------|-----|--------------|--------------|
+| id | integer | path | - |A user ID.
+<br>
+
+```curl
+ curl http://localhost:3333/users/1
+```
+
+### Response Get a User
+
+```curl
 {
     "id": 1,
     "login": "mojombo",
     "url": "https://api.github.com/users/mojombo",
     "avatar_url": "https://avatars.githubusercontent.com/u/1?v=4",
+    "gists_url": "https://api.github.com/users/mojombo/gists{/gist_id}",
+    "events_url": "https://api.github.com/users/mojombo/events{/privacy}",
     "name": "Tom Preston-Werner",
     "email": "tom@mojombo.com",
     "hireable": null,
@@ -193,8 +236,49 @@ How to get data for user.
   }
 ```
 
+### Request Get a User Repository
+
+`GET /users/:id/repositories`
+
+<b>Parameters</b>
+| Name | Type | In | Default | Description |
+|-------|-------|-----|--------------|--------------|
+| id | integer | path | - |A user ID.
+| limit | integer | query | 10 |Results per page (max 100)
+| starting_after | integer | query | - |A user ID. Only return users with an ID greater than this ID.
+| order | string | query | asc | Can be one of `asc` or `desc`.
+<br>
+
+```curl
+ curl http://localhost:3333/users/1/repositories
+```
+
+### Response Get a User Repository
+
+```curl
+[
+  {
+    "id": 1,
+    "name": "grit",
+    "html_url": "https://github.com/mojombo/grit",
+    "subscription_url": "https://api.github.com/repos/mojombo/grit/subscription",
+    "clone_url": "https://github.com/mojombo/grit.git",
+    "description": "**Grit is no longer maintained. Check out libgit2/rugged.** Grit gives you object oriented read/write access to Git repositories via Ruby.",
+    "language": "Ruby",
+    "size": 7954,
+    "forks": 531,
+    "open_issues": 26,
+    "stargazers": null,
+    "watchers": 1904,
+    "created_at": "2007-10-29T14:37:16.000Z",
+    "updated_at": "2021-01-25T18:00:32.000Z",
+    "pushed_at": "2020-10-01T03:55:32.000Z"
+  },
+]
+
 <!-- CONTACT -->
 
 ## Contact
 
 Project Link: [GitHubScraper](https://github.com/augustokl/githubScraper)
+```
