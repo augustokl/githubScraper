@@ -28,7 +28,18 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#rest-api">Rest Api</a></li>
+    <li>
+      <a href="#rest-api">Rest Api</a>
+      <ul>
+        <li>
+          <a href="#user">User</a>
+           <ul>
+            <li><a href="#request-get-users">Request Get Users</a></li>
+            <li><a href="#response-get-users">Response Get Users</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
     <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
@@ -143,22 +154,22 @@ Examples how to use `Api`
 
 How to get data for user.
 
-### Request
+### Request Get Users
 
 `GET /users`
 
 <b>Parameters</b>
 | Name | Type | In | Description |
 |-------|-------|-----|--------------|
-| limit | integer | query | A user ID. Only return users with an ID greater than this ID. |
-| starting_after | integer | query | Results per page (max 100) |
+| limit | integer | query | Results per page (max 100)
+| starting_after | integer | query | A user ID. Only return users with an ID greater than this ID. ||
 <br>
 
 ```curl
  curl http://localhost:3333/users
 ```
 
-### Response
+### Response Get Users
 
 ```curl
 {
