@@ -10,7 +10,7 @@ const scraperQueue = new Queue(Scraper.key, redisConfig);
 scraperQueue.on('failed', (_, err) => {
   const time = format(new Date(), 'MM/dd/yyyy HH:mm');
   console.log('Job failed at ', time);
-  console.log('Error: ', err);
+  console.error('Error: ', err);
 });
 
 scraperQueue.on('active', () => {

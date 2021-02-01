@@ -141,6 +141,12 @@ To get a local copy up and running follow these simple example steps.
    cat dump_githubscraper:31-01-2021_15_20_58.sql | docker exec -i githubscraper-db psql -U postgres
    ```
 
+   or using migrations and getting a clean database
+
+   ```sh
+   npm run typeorm migration:run
+   ```
+
 5. Server
 
    ```sh
