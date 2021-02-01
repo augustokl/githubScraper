@@ -28,7 +28,7 @@ class UsersRepository implements IUsersRepository {
       },
       cache: {
         id: `user:find:${id}`,
-        milliseconds: 10000,
+        milliseconds: 5000,
       },
     });
 

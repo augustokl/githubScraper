@@ -72,7 +72,7 @@ It's a small service that's scrape data User and Repository from GitHub API's an
 - Data from GitHub's API is scrape using `Bull` for cron schedule and `Redis` queue then the data is persisted in `PostgreSQL`,
 - <b>`GitHubScraper`</b> use the same `GitHub` ids for `Repository` and `User`.
 - <b>`GitHubScraper`</b> available data through `Node.js` and `Express`.
-- Queries are cached in `Redis` for 10 seconds for better performace.
+- Queries are cached in `Redis` for 5 seconds for better performace.
 
 <!-- GETTING STARTED -->
 
@@ -89,7 +89,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Setup environment variables
 
-- Rename `.env.example` to `.env`
+- Check if you have a `.env` else rename `.env.example` to `.env`
 - Check the `.env` file and modify the variables with your `docker-compose` configurations for `Redis` and `PostgreSQL`
 - For `API_GITHUB_KEY` you should acess [https://github.com/settings/tokens](https://github.com/settings/tokens) and generate `Personal access token` so that you can do more request for GitHub API's
 - For `CRON_SCHEDULE` you can use [cron expression generator](https://crontab.cronhub.io/) and generate you own schedule 😁

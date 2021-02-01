@@ -92,7 +92,7 @@ class RepositoriesRepository implements IRepositoriesRepository {
       relations: ['owner'],
       cache: {
         id: `repository:find:${id}`,
-        milliseconds: 10000,
+        milliseconds: 5000,
       },
     });
 
