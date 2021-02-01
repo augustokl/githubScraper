@@ -32,11 +32,10 @@ export default {
       const { data } = await api.get(apiRequest);
       const listUserLength = data.length;
 
-      let progress = 0;
       let rowCount = 0;
 
       for (const row of data) {
-        progress = (100 * rowCount) / listUserLength;
+        const progress = (100 * rowCount) / listUserLength;
         job.progress(progress);
 
         const { data: userRaw } = await api.get(`/users/${row.login}`);
