@@ -89,6 +89,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Setup environment variables
 
+- Rename `.env.example` to `.env`
 - Check the `.env` file and modify the variables with your `docker-compose` configurations for `Redis` and `PostgreSQL`
 - For `API_GITHUB_KEY` you should acess [https://github.com/settings/tokens](https://github.com/settings/tokens) and generate `Personal access token` so that you can do more request for GitHub API's
 - For `CRON_SCHEDULE` you can use [cron expression generator](https://crontab.cronhub.io/) and generate you own schedule 😁

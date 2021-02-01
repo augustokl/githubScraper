@@ -10,7 +10,13 @@ usersRouter.get(
   '/',
   celebrate({
     [Segments.QUERY]: {
-      order: Joi.string().uppercase().valid('ASC', 'DESC').failover('ASC'),
+      order: Joi.string()
+        .uppercase()
+        .valid('ASC', 'DESC')
+        .failover('ASC')
+        .default('ASC'),
+      limit: Joi.number().integer().failover(10).default(10),
+      starting_after: Joi.number().integer().failover(0).default(0),
     },
   }),
   usersController.index,
@@ -37,7 +43,13 @@ usersRouter.get(
       }),
     },
     [Segments.QUERY]: {
-      order: Joi.string().uppercase().valid('ASC', 'DESC').failover('ASC'),
+      order: Joi.string()
+        .uppercase()
+        .valid('ASC', 'DESC')
+        .failover('ASC')
+        .default('ASC'),
+      limit: Joi.number().integer().failover(10).default(10),
+      starting_after: Joi.number().integer().failover(0).default(0),
     },
   }),
   usersController.findRepositories,

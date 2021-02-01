@@ -14,43 +14,49 @@ interface IScraper {
 export default {
   key: 'Scraper',
   async handle(job: Job, done: DoneCallback): Promise<void> {
-    const userUtils = new UserUtils();
-    const repositoryUtils = new RepositoryUtils();
+    try {
+      const userUtils = new UserUtils();
+      const repositoryUtils = new RepositoryUtils();
 
-    const userController = new UsersController();
-    const repositoriesController = new RepositoriesController();
+      const userController = new UsersController();
+      const repositoriesController = new RepositoriesController();
 
-    const id = await userController.lastId();
+      const id = await userController.lastId();
 
-    let apiRequest = '/users?per_page=20';
+      let apiRequest = '/users?per_page=20';
 
-    if (id) {
-      apiRequest += `&since=${id}`;
-    }
-
-    const { data } = await api.get(apiRequest);
-    const listUserLength = data.length;
-
-    let progress = 0;
-    let rowCount = 0;
-
-    for (const row of data) {
-      progress = (100 * rowCount) / listUserLength;
-      job.progress(progress);
-
-      const { data: userRaw } = await api.get(`/users/${row.login}`);
-      const { data: userReposRaw } = await api.get(`/users/${row.login}/repos`);
-
-      const user = userUtils.extractData(userRaw);
-      await userController.create(user);
-
-      for (const repositoryRaw of userReposRaw) {
-        const repository = repositoryUtils.extractData(repositoryRaw);
-        await repositoriesController.create(repository);
+      if (id) {
+        apiRequest += `&since=${id}`;
       }
-      rowCount++;
+
+      const { data } = await api.get(apiRequest);
+      const listUserLength = data.length;
+
+      let progress = 0;
+      let rowCount = 0;
+
+      for (const row of data) {
+        progress = (100 * rowCount) / listUserLength;
+        job.progress(progress);
+
+        const { data: userRaw } = await api.get(`/users/${row.login}`);
+        const { data: userReposRaw } = await api.get(
+          `/users/${row.login}/repos`,
+        );
+
+        const user = userUtils.extractData(userRaw);
+        await userController.create(user);
+
+        for (const repositoryRaw of userReposRaw) {
+          const repository = repositoryUtils.extractData(repositoryRaw);
+          await repositoriesController.create(repository);
+        }
+        rowCount++;
+      }
+      job.progress(100);
+      done();
+    } catch (error) {
+      done(error.message);
     }
-    job.progress(100);
-    done();
   },
 } as IScraper;
