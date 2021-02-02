@@ -256,9 +256,9 @@ How to get data for user.
 <b>Parameters</b>
 | Name | Type | In | Default | Description |
 |-------|-------|-----|--------------|--------------|
-| id | integer | path | - |A user ID.
+| id | integer | path | - |A repository ID.
 | limit | integer | query | 10 |Results per page (max 100)
-| starting_after | integer | query | - |A user ID. Only return users with an ID greater than this ID.
+| starting_after | integer | query | - |A repository ID. Only return repositories with an ID greater than this ID.
 | order | string | query | asc | Can be one of `asc` or `desc`.
 <br>
 
@@ -302,7 +302,7 @@ How to get data for repository.
 | Name | Type | In | Default | Description |
 |-------|-------|-----|--------------|--------------|
 | limit | integer | query | 10 | Results per page (max 100)
-| starting_after | integer | query | - | A user ID. Only return users with an ID greater than this ID.
+| starting_after | integer | query | - | A repository ID. Only return repositories with an ID greater than this ID.
 | order | string | query | asc | Can be one of `asc` or `desc`.
 <br>
 
@@ -356,7 +356,7 @@ How to get data for repository.
 <b>Parameters</b>
 | Name | Type | In | Default | Description |
 |-------|-------|-----|--------------|--------------|
-| id | integer | path | - |A user ID.
+| id | integer | path | - |A repository ID.
 <br>
 
 ```bash
